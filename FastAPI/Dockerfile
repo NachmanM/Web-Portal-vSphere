@@ -7,8 +7,7 @@ RUN apt update && pip3 install uvicorn
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY main.py ./
-COPY test-script.py ./
+COPY code/ ./
 
 EXPOSE 8000
 
