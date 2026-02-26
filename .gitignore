@@ -1,6 +1,6 @@
 # Custom created
 stack/
-
+venv/
 
 # Local .terraform directories
 .terraform/
