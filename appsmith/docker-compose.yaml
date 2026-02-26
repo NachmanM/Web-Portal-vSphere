@@ -8,3 +8,12 @@ services:
     volumes:
       - ./stack:/appsmith-stacks
     restart: unless-stopped
+
+    networks:
+      - shared-net
+
+networks:
+  shared-net:
+    external: true
+    name: shared-bridge
+    

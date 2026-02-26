@@ -1,0 +1,16 @@
+services:
+  fast-api:
+    image: nachman/fast-api:v0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - shared-net
+
+networks:
+  shared-net:
+    external: true
+    name: shared-bridge
+    
