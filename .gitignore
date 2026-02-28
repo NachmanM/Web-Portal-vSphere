@@ -1,6 +1,8 @@
 # Custom created
 stack/
 venv/
+secrets/
+.env
 
 # Local .terraform directories
 .terraform/
