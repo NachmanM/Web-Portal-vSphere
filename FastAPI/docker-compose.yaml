@@ -8,6 +8,8 @@ services:
       - "8000:8000"
     networks:
       - shared-net
+    env_file:
+      - .env
 
 networks:
   shared-net:
