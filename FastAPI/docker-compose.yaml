@@ -10,6 +10,8 @@ services:
       - shared-net
     env_file:
       - .env
+    volumes:
+      - ./code:/FastAPI
 
 networks:
   shared-net:

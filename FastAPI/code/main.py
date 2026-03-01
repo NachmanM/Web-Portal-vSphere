@@ -17,7 +17,9 @@ class AppsmithPayload(BaseModel):
 class VMCreation(BaseModel):
     vm_name: str
     folder: str
-
+    template: str
+    portgroup: str
+    is_windows_image: str
 
 
 
@@ -34,6 +36,9 @@ def create_vm(payload: VMCreation):
         cmd2 = ["terraform", "-chdir=Terraform", "apply",
                  f"-var=vm_name={payload.vm_name}",
                  f"-var=folder={payload.folder}",
+                 f"-var=template={payload.template}",
+                 f"-var=portgroup={payload.portgroup}",
+                 f"-var=is_windows_image={payload.is_windows_image}",
                  f"-var=VCENTER_PWD={VCENTER_PWD}", "-auto-approve"]
         result = subprocess.run(
             cmd2,
@@ -41,7 +46,7 @@ def create_vm(payload: VMCreation):
             text=True,
             check=True
         )
-        return {"status": "success", "created": f"{payload.message}"}
+        return {"status": "success", "created": f"{result.stdout}"}
     except Exception as e:
         print("ERROR:\n")
         return {"status": "failed", "message": str(e)}
@@ -65,6 +70,41 @@ def list_folders():
         return {f"Error: \n{e}"}
     
 
+@app.get("/list-templates")
+def list_templates():
+    try:
+        cmd = ["python3", "list-templates.py"]
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+
+        raw_output = result.stdout.rstrip()
+        parsed_templates = ast.literal_eval(raw_output)
+        return {"status": "success", "templates": parsed_templates}
+    except Exception as e:
+        return {"status": "error", "Error message": e}
+
+
+
+@app.get("/list-portgroups")
+def list_portgroups():
+    try:
+        cmd = ["python3", "list-portgroups.py"]
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+
+        raw_output = result.stdout.rstrip()
+        parsed_portgroups = ast.literal_eval(raw_output)
+        return {"status": "success", "portgroups": parsed_portgroups}
+    except Exception as e:
+        return {"status": "error", "Error message": e}
 
 
 

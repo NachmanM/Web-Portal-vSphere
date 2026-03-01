@@ -34,11 +34,12 @@ try:
     for folder in container.view:
         folder_name = folder.name
         folder_code = folder.name.upper().replace(" ", "_")
-
-        folders.append({
-            "name": folder_name,
-            "code": folder_code
-        })
+        clean_folder_name = folder_name.strip().lower()
+        if folder_name not in ["vm", "host", "datastore", "network"]:
+            folders.append({
+                "name": folder_name,
+                "code": folder_code
+            })
  
     print(folders)
     container.Destroy()

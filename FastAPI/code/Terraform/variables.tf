@@ -21,3 +21,15 @@ variable "vm_name" {
 variable "folder" {
   type = string
 }
+
+variable "template" {
+  type = string
+}
+
+variable "is_windows_image" {
+  type = bool
+}
+
+variable "portgroup" {
+  type = string
+}

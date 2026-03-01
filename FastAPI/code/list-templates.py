@@ -23,8 +23,8 @@ try:
     content = si.RetrieveContent()
 
     container = content.viewManager.CreateContainerView(
-        content.rooFolder,
-        [vim.VirtulMachine],
+        content.rootFolder,
+        [vim.VirtualMachine],
         True
     )
 
@@ -33,10 +33,11 @@ try:
         if vm.config.template:
             templates.append(
                 {
-                    "name": vm.config.template,
-                    "code": vm.config.template.upper().replace(" ", "_")
+                    "name": vm.config.name,
+                    "code": vm.config.name.upper().replace(" ", "_")
                 }
             )
+    print(templates)
     container.Destroy()
 
 finally:
