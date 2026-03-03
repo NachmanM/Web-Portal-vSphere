@@ -33,3 +33,22 @@ variable "is_windows_image" {
 variable "portgroup" {
   type = string
 }
+
+variable "ram_size" {
+  type        = number
+  description = "RAM size in megabytes"
+  default     = 8192
+}
+
+variable "cpu_number" {
+  description = "number of CPU cores"
+  default     = 3
+  type        = number
+}
+
+variable "disk_size_gb" {
+  description = "List of disk sizes to override template disk size"
+  type        = list(any)
+  default     = null
+}
+

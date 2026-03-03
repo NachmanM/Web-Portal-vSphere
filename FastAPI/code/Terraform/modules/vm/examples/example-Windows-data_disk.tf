@@ -12,7 +12,7 @@ module "example-server-windowsvm-advanced" {
   vmtemp            = "TemplateName"
   instances         = 2
   vmname            = "AdvancedVM"
-  domain          = "somedomain.com"
+  domain            = "somedomain.com"
   network = {
     "Name of the Port Group in vSphere" = ["10.13.113.2", "10.13.113.3"] # To use DHCP create Empty list ["",""]
   }

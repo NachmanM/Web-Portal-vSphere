@@ -1,4 +1,16 @@
 services:
+  db:
+    image: postgres:17.9
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env.db
+    networks:
+      - shared-net
+        
   fast-api:
     image: nachman/fast-api:v0.0
     build:
@@ -12,9 +24,14 @@ services:
       - .env
     volumes:
       - ./code:/FastAPI
+    depends_on:
+      - db
 
 networks:
   shared-net:
     external: true
     name: shared-bridge
-    
+
+volumes:
+  postgres_data: {}
+

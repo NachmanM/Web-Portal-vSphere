@@ -5,10 +5,17 @@ module "vm" {
   vmfolder  = var.folder
   datastore = "datastore1 (2)" #You can use datastore variable instead
   vmtemp    = var.template
-  instances = 1
-  vmname    = var.vm_name
+
+  instances        = 1
+  vmname           = var.vm_name
   is_windows_image = var.is_windows_image
-  network ={
+
+  ram_size     = var.ram_size
+  cpu_number   = var.cpu_number
+  disk_size_gb = var.disk_size_gb
+
+  network = {
     (var.portgroup) = [""]
   }
+  wait_for_guest_ip_timeout = 5
 }

@@ -1,4 +1,4 @@
-output "DC" {
-  value       = data.vsphere_datacenter.dc
+output "ip" {
+  value       = module.vm.ip
   description = "description"
 }
