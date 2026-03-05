@@ -18,4 +18,6 @@ module "vm" {
     (var.portgroup) = [""]
   }
   wait_for_guest_ip_timeout = 5
+  ignored_guest_ips = ["fe80::/10", "169.254.0.0/16"]
+  wait_for_guest_net_routable = false
 }
