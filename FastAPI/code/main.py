@@ -7,15 +7,14 @@ import ast
 import json
 import asyncio
 import asyncpg
-import re
 from datetime import datetime
-from dotenv import load_dotenv
+from sync_pg.sync_pg_lifecycle import lifespan
 
 
 
 
 PG_PWD = os.getenv("PG_PWD")
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 class AppsmithPayload(BaseModel):
     message: str
@@ -36,7 +35,13 @@ class VMCreation(BaseModel):
     shutdown_date: datetime
     deletion_date: datetime
 
-
+async def run_db_execute(query: str, *args):
+    conn = await asyncpg.connect(os.getenv("PG_CONN_STR"))
+    try:
+        # The *args here unpacks the tuple back into individual arguments for the driver
+        return await conn.execute(query, *args)
+    finally:
+        await conn.close()
 
 @app.post('/vm')
 def create_vm(payload: VMCreation):
@@ -95,26 +100,16 @@ def create_vm(payload: VMCreation):
         
         apply_result = subprocess.run(cmd2, capture_output=True, text=True, check=True)
 
-        cmd_output = ["terraform", "-chdir=Terraform", "output", "-json", "uuid"]
+        cmd_output = ["terraform", "-chdir=Terraform", "output", "-json", "moid"]
         output_result = subprocess.run(cmd_output, capture_output=True, text=True, check=True)
         uuid_list = json.loads(output_result.stdout)
         real_uuid = uuid_list[0]
         if real_uuid:
-            # 2. Save the REAL BIOS UUID to the new column
-            async def save_vcenter_uuid():
-                conn = await asyncpg.connect(os.getenv("PG_CONN_STR"))
-                try:
-                    await conn.execute(
-                        "UPDATE terraform_remote_state.state_metadata SET vcenter_uuid = $1 WHERE state_key = $2",
-                        real_uuid, random_uuid
-                    )
-                    await conn.execute(
-                        "UPDATE terraform_remote_state.state_metadata SET status = 'active'"
-                    )
-                finally:
-                    await conn.close()
+            # 2. Save the MOID to the vcenter column
+            asyncio.run(run_db_execute("UPDATE terraform_remote_state.state_metadata SET vcenter_uuid = $1 WHERE state_key = $2",
+                    real_uuid, random_uuid))
             
-        asyncio.run(save_vcenter_uuid())
+            asyncio.run(run_db_execute("UPDATE terraform_remote_state.state_metadata SET status = 'active'"))
 
         return {"status": "success", "created": f"{apply_result.stdout}"}
     except subprocess.CalledProcessError as e:
@@ -135,7 +130,28 @@ def create_vm(payload: VMCreation):
             "message": "Internal System Error", 
             "command_result": str(e)
         }
+    
 
+
+@app.get("/vm_info/{moid}")
+def get_vm_info(moid: str): # 2. Accept the variable directly from the URL path
+    try:
+        # 3. Pass the path variable directly into the subprocess command
+        cmd = ["python3", "vm_info.py", moid]
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        
+        parsed_data = ast.literal_eval(result.stdout.rstrip())
+        return {"status": "success", "vm_info": parsed_data}
+        
+    except subprocess.CalledProcessError as e:
+        # Catch standard subprocess failures (e.g., script exited with code 1)
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Script failed with exit code {e.returncode}. Stderr: {e.stderr}"
+        )
+    except Exception as e:
+        # Catch generic Python errors (e.g., FileNotFoundError, ast parsing errors)
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/list-folders")
 def list_folders():
@@ -152,7 +168,7 @@ def list_folders():
         parsed_folders = ast.literal_eval(raw_output)
         return {"status": "success", "folders": parsed_folders}
     except Exception as e:
-        return {f"Error: \n{e}\nOutput: {result}"}
+        return {f"Error: \n{e}\nOutput: {result.stderr}"}
     
 
 @app.get("/list-templates")

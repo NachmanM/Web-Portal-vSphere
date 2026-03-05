@@ -42,14 +42,12 @@ async def shutdown_by_real_uuid():
     si = SmartConnect(host=VCENTER_HOST, user=VCENTER_USER, pwd=VCENTER_PWD, sslContext=ssl._create_unverified_context())
     content = si.RetrieveContent()
     try:
-        search_index = si.content.searchIndex
         
         for row in rows:
-            target_uuid = row['vcenter_uuid']
-            print(target_uuid)
+            target_moid = row['vcenter_uuid']
+            print(target_moid)
             
-            
-            vm = search_index.FindByUuid(None, target_uuid, True, False)
+            vm = vim.VirtualMachine(target_moid, si._stub)
 
             if vm:
                 print(f"Host Connection State: {vm.runtime.host.runtime.connectionState}")
@@ -59,11 +57,11 @@ async def shutdown_by_real_uuid():
                     print("Found a row")
                     await conn.execute(
                         "UPDATE terraform_remote_state.state_metadata SET status = 'powered_off' WHERE vcenter_uuid = $1",
-                        target_uuid
+                        target_moid
                     )
                     print("Updated the VM to powered_off in the DB")
             else:
-                print(f"VM {target_uuid} not found in vCenter.")
+                print(f"VM {target_moid} not found in vCenter.")
 
     finally:
         Disconnect(si)

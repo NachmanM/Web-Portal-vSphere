@@ -32,3 +32,7 @@ output "disk" {
   description = "Disks of the deployed VM"
   value       = vsphere_virtual_machine.vm.*.disk
 }
+
+output "moid" {
+  value = vsphere_virtual_machine.vm.*.moid
+}
