@@ -35,6 +35,8 @@ class VMCreation(BaseModel):
     shutdown_date: datetime
     deletion_date: datetime
 
+    transaction_uuid: str
+
 async def run_db_execute(query: str, *args):
     conn = await asyncpg.connect(os.getenv("PG_CONN_STR"))
     try:
@@ -47,7 +49,7 @@ async def run_db_execute(query: str, *args):
 def create_vm(payload: VMCreation):
     try:
         import uuid
-        random_uuid = str(uuid.uuid4())
+        random_uuid = payload.transaction_uuid
         
         cmd = ["terraform", "-chdir=Terraform", "init"]
         init_result = subprocess.run(cmd, capture_output=True, text=True, check=True)
@@ -61,9 +63,9 @@ def create_vm(payload: VMCreation):
                 query = """
                 INSERT INTO terraform_remote_state.state_metadata (
                     state_key, owner, folder, portgroup, template_used, 
-                    cpu_cores, ram_mb, disk_gb, shutdown_date, deletion_date, status
+                    cpu_cores, ram_mb, disk_gb, shutdown_date, deletion_date, vcenter_uuid, status
                 ) VALUES (
-                    $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'provisioning'
+                    $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, 'provisioning'
                 )
                 """
             
@@ -78,7 +80,8 @@ def create_vm(payload: VMCreation):
                     payload.ram_size,               # Maps to $7 (Matches your terraform var)
                     int(payload.disk_size_gb[0]),   # Maps to $8 (Matches your terraform var)
                     payload.shutdown_date,          # Maps to $9 (Ensure this exists in your model)
-                    payload.deletion_date           # Maps to $10 (Ensure this exists in your model)
+                    payload.deletion_date,          # Maps to $10 (Ensure this exists in your model)
+                    f"pending-{random_uuid}"        # Maps to $11
                 )
             finally:
                 await conn.close()
@@ -109,7 +112,8 @@ def create_vm(payload: VMCreation):
             asyncio.run(run_db_execute("UPDATE terraform_remote_state.state_metadata SET vcenter_uuid = $1 WHERE state_key = $2",
                     real_uuid, random_uuid))
             
-            asyncio.run(run_db_execute("UPDATE terraform_remote_state.state_metadata SET status = 'active'"))
+            asyncio.run(run_db_execute("UPDATE terraform_remote_state.state_metadata SET status = 'active' WHERE vcenter_uuid = $1",
+                    real_uuid))
 
         return {"status": "success", "created": f"{apply_result.stdout}"}
     except subprocess.CalledProcessError as e:
