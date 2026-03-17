@@ -1,0 +1,2 @@
+DELETE FROM terraform_remote_state.vcenter_inventory_cache
+WHERE vm_moid = {{this.params.moid}};

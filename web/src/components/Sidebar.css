@@ -1,0 +1,139 @@
+.sidebar {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    background: var(--bg-sidebar);
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 90;
+    transition: transform var(--transition), width var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.collapsed {
+    transform: translateX(calc(-1 * var(--sidebar-width)));
+    width: 0;
+}
+
+.sidebar-header {
+    padding: 16px;
+}
+
+.sidebar-search {
+    width: 100%;
+    background: var(--bg-sidebar-hover);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    color: var(--text-sidebar);
+    font-family: inherit;
+    font-size: 0.82rem;
+    outline: none;
+    transition: var(--transition);
+}
+
+.sidebar-search::placeholder {
+    color: var(--text-muted);
+}
+
+.sidebar-search:focus {
+    border-color: var(--primary-light);
+}
+
+.sidebar-tree {
+    flex: 1;
+    padding: 4px 8px 16px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--bg-sidebar-active);
+    border-radius: 10px;
+}
+
+/* Tree items */
+.tree-folder {
+    margin-bottom: 2px;
+}
+
+.tree-folder-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 10px;
+    border-radius: var(--radius-sm);
+    color: var(--text-sidebar);
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    user-select: none;
+}
+
+.tree-folder-label:hover {
+    background: var(--bg-sidebar-hover);
+    color: var(--text-sidebar-bright);
+}
+
+.tree-folder-label .folder-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.tree-folder-label .chevron {
+    margin-left: auto;
+    font-size: 0.7rem;
+    transition: transform var(--transition);
+    opacity: 0.5;
+}
+
+.tree-folder.open>.tree-folder-label .chevron {
+    transform: rotate(90deg);
+}
+
+.tree-children {
+    display: none;
+    padding-left: 16px;
+}
+
+.tree-folder.open>.tree-children {
+    display: block;
+}
+
+.tree-vm {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    color: var(--text-sidebar);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tree-vm:hover {
+    background: var(--bg-sidebar-hover);
+    color: var(--text-sidebar-bright);
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.status-dot.on {
+    background: #34D399;
+}
+
+.status-dot.off {
+    background: #EF4444;
+}
+
+.status-dot.provisioning {
+    background: #FBBF24;
+}

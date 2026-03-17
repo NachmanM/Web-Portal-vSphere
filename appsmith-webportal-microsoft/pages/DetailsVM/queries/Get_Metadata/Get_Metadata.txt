@@ -1,0 +1,8 @@
+SELECT 
+  owner, 
+  created_at AS creation_date, 
+  shutdown_date, 
+  deletion_date 
+FROM terraform_remote_state."state_metadata" 
+WHERE vcenter_uuid = '{{VM_Details.data.vm_info.moid}}' 
+LIMIT 1;

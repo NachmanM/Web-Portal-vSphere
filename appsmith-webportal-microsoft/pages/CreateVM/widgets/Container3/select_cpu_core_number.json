@@ -1,0 +1,61 @@
+{
+  "accentColor": "{{appsmith.theme.colors.primaryColor}}",
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 25,
+  "boxShadow": "none",
+  "defaultOptionValue": "GREEN",
+  "dynamicBindingPathList": [
+    {
+      "key": "accentColor"
+    },
+    {
+      "key": "borderRadius"
+    }
+  ],
+  "dynamicHeight": "FIXED",
+  "dynamicPropertyPathList": [
+    {
+      "key": "sourceData"
+    }
+  ],
+  "dynamicTriggerPathList": [],
+  "isDisabled": false,
+  "isFilterable": true,
+  "isLoading": false,
+  "isRequired": false,
+  "isVisible": true,
+  "key": "f8au9girvb",
+  "labelAlignment": "left",
+  "labelPosition": "Top",
+  "labelText": "Number of CPU cores:",
+  "labelTextSize": "0.875rem",
+  "labelWidth": 5,
+  "leftColumn": 0,
+  "maxDynamicHeight": 9000,
+  "minDynamicHeight": 4,
+  "minWidth": 450,
+  "mobileBottomRow": 42,
+  "mobileLeftColumn": 10,
+  "mobileRightColumn": 30,
+  "mobileTopRow": 35,
+  "needsErrorInfo": false,
+  "optionLabel": "name",
+  "optionValue": "code",
+  "originalBottomRow": 25,
+  "originalTopRow": 18,
+  "parentColumnSpace": 2.84765625,
+  "parentId": "0fvofhkd1t",
+  "parentRowSpace": 10,
+  "placeholderText": "Select option",
+  "renderMode": "CANVAS",
+  "responsiveBehavior": "fill",
+  "rightColumn": 64,
+  "serverSideFiltering": false,
+  "sourceData": "[\n  { \"name\": \"1 Core\", \"code\": 1 },\n  { \"name\": \"2 Cores\", \"code\": 2 },\n  { \"name\": \"3 Cores\", \"code\": 3 },\n  { \"name\": \"4 Cores\", \"code\": 4 },\n  { \"name\": \"5 Cores\", \"code\": 5 },\n  { \"name\": \"6 Cores\", \"code\": 6 },\n  { \"name\": \"7 Cores\", \"code\": 7 },\n  { \"name\": \"8 Cores\", \"code\": 8 },\n  { \"name\": \"9 Cores\", \"code\": 9 },\n  { \"name\": \"10 Cores\", \"code\": 10 },\n  { \"name\": \"11 Cores\", \"code\": 11 },\n  { \"name\": \"12 Cores\", \"code\": 12 },\n  { \"name\": \"13 Cores\", \"code\": 13 },\n  { \"name\": \"14 Cores\", \"code\": 14 },\n  { \"name\": \"15 Cores\", \"code\": 15 },\n  { \"name\": \"16 Cores\", \"code\": 16 },\n  { \"name\": \"17 Cores\", \"code\": 17 },\n  { \"name\": \"18 Cores\", \"code\": 18 },\n  { \"name\": \"19 Cores\", \"code\": 19 },\n  { \"name\": \"20 Cores\", \"code\": 20 },\n  { \"name\": \"21 Cores\", \"code\": 21 },\n  { \"name\": \"22 Cores\", \"code\": 22 },\n  { \"name\": \"23 Cores\", \"code\": 23 },\n  { \"name\": \"24 Cores\", \"code\": 24 },\n  { \"name\": \"25 Cores\", \"code\": 25 },\n  { \"name\": \"26 Cores\", \"code\": 26 },\n  { \"name\": \"27 Cores\", \"code\": 27 },\n  { \"name\": \"28 Cores\", \"code\": 28 },\n  { \"name\": \"29 Cores\", \"code\": 29 },\n  { \"name\": \"30 Cores\", \"code\": 30 },\n  { \"name\": \"31 Cores\", \"code\": 31 },\n  { \"name\": \"32 Cores\", \"code\": 32 }\n]",
+  "topRow": 18,
+  "type": "SELECT_WIDGET",
+  "version": 1,
+  "widgetId": "y7tontm32p",
+  "widgetName": "select_cpu_core_number"
+}

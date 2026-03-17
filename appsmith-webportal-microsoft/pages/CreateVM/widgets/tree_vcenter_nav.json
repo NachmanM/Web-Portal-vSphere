@@ -1,0 +1,63 @@
+{
+  "accentColor": "{{appsmith.theme.colors.primaryColor}}",
+  "allowClear": false,
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 316,
+  "boxShadow": "none",
+  "defaultOptionValue": "BLUE",
+  "dynamicBindingPathList": [
+    {
+      "key": "accentColor"
+    },
+    {
+      "key": "borderRadius"
+    },
+    {
+      "key": "options"
+    }
+  ],
+  "dynamicHeight": "FIXED",
+  "dynamicTriggerPathList": [
+    {
+      "key": "onOptionChange"
+    }
+  ],
+  "expandAll": false,
+  "isDisabled": false,
+  "isLoading": false,
+  "isRequired": false,
+  "isVisible": true,
+  "key": "x0r7oi2pfa",
+  "labelAlignment": "left",
+  "labelPosition": "Auto",
+  "labelText": "Folder / Project",
+  "labelTextSize": "0.875rem",
+  "labelWidth": "21",
+  "leftColumn": 0,
+  "maxDynamicHeight": 9000,
+  "minDynamicHeight": 4,
+  "minWidth": 450,
+  "mobileBottomRow": 12,
+  "mobileLeftColumn": 0,
+  "mobileRightColumn": 8,
+  "mobileTopRow": 5,
+  "needsErrorInfo": false,
+  "onOptionChange": "{{RedirectUser.tree_vcenter_navonOptionChange();}}",
+  "options": "{{\n  (function() {\n    const dbData = get_vm_cached.data || [];\n    \n    // 1. Extract unique folder names\n    const uniqueFolders = [...new Set(dbData.map(row => row.folder_name))];\n    \n    // 2. Map folders to the TreeSelect structure\n    return uniqueFolders.map(folderName => {\n      \n      // Filter VMs belonging to this folder\n      const vmsInFolder = dbData.filter(vm => vm.folder_name === folderName);\n      \n      // Create the children array\n      const children = vmsInFolder.map(vm => {\n        // Evaluate power state to assign the correct indicator\n        let statusIcon = '🔴 '; // Default to powered off\n        \n        if (vm.power_state === 'poweredOn') {\n            statusIcon = '🟢 ';\n        } else if (vm.power_state === 'provisioning') {\n            statusIcon = '🟡 ';\n        }\n        \n        return {\n          label: statusIcon + vm.vm_name,\n          value: vm.vm_moid\n        };\n      });\n      \n      return {\n        label: \"📁 \" + folderName,\n        value: \"FOLDER::\" + folderName, // Use a prefix to distinguish folders from VM UUIDs\n        children: children\n      };\n    });\n  })()\n}}",
+  "originalBottomRow": 316,
+  "originalTopRow": 248,
+  "parentColumnSpace": 16.59375,
+  "parentId": "0",
+  "parentRowSpace": 10,
+  "placeholderText": "Select option",
+  "renderMode": "CANVAS",
+  "responsiveBehavior": "fill",
+  "rightColumn": 31,
+  "shouldScrollContents": true,
+  "topRow": 248,
+  "type": "SINGLE_SELECT_TREE_WIDGET",
+  "version": 1,
+  "widgetId": "dstruayy5q",
+  "widgetName": "tree_vcenter_nav"
+}

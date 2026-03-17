@@ -1,0 +1,53 @@
+{
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 21,
+  "dynamicBindingPathList": [
+    {
+      "key": "truncateButtonColor"
+    },
+    {
+      "key": "fontFamily"
+    },
+    {
+      "key": "borderRadius"
+    },
+    {
+      "key": "text"
+    }
+  ],
+  "dynamicHeight": "FIXED",
+  "dynamicTriggerPathList": [],
+  "fontFamily": "{{appsmith.theme.fontFamily.appFont}}",
+  "fontSize": "1rem",
+  "fontStyle": "BOLD",
+  "isLoading": false,
+  "isVisible": true,
+  "key": "g1oymx0so7",
+  "leftColumn": 1,
+  "maxDynamicHeight": 9000,
+  "minDynamicHeight": 4,
+  "minWidth": 450,
+  "mobileBottomRow": 10,
+  "mobileLeftColumn": 2,
+  "mobileRightColumn": 18,
+  "mobileTopRow": 6,
+  "needsErrorInfo": false,
+  "overflow": "NONE",
+  "parentColumnSpace": 6.9375,
+  "parentId": "46g8pshrcv",
+  "parentRowSpace": 10,
+  "renderMode": "CANVAS",
+  "responsiveBehavior": "fill",
+  "rightColumn": 30,
+  "shouldTruncate": false,
+  "text": "Name: {{input_vm_name.text}}\nFolder: {{select_folder.selectedOptionLabel}}\nTemplate: {{select_template.selectedOptionLabel}}\nPortgroup: {{select_portgroup.selectedOptionValue}}\nRAM: {{input_ram_size.text}}MB\nDisk: {{input_disk_size_gb.text}}GB\nCPU: {{select_cpu_core_number.selectedOptionLabel}}",
+  "textAlign": "LEFT",
+  "textColor": "#231F20",
+  "topRow": 6,
+  "truncateButtonColor": "{{appsmith.theme.colors.primaryColor}}",
+  "type": "TEXT_WIDGET",
+  "version": 1,
+  "widgetId": "vni99gjae5",
+  "widgetName": "Genral_VM_Details"
+}

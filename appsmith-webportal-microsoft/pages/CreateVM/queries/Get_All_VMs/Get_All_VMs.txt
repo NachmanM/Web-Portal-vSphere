@@ -1,0 +1,1 @@
+SELECT * FROM terraform_remote_state."state_metadata" LIMIT 10;

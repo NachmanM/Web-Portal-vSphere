@@ -1,0 +1,64 @@
+{
+  "accentColor": "{{appsmith.theme.colors.primaryColor}}",
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 17,
+  "boxShadow": "none",
+  "defaultOptionValue": "Nachman-Testing",
+  "dynamicBindingPathList": [
+    {
+      "key": "accentColor"
+    },
+    {
+      "key": "borderRadius"
+    },
+    {
+      "key": "sourceData"
+    }
+  ],
+  "dynamicHeight": "FIXED",
+  "dynamicPropertyPathList": [
+    {
+      "key": "sourceData"
+    }
+  ],
+  "dynamicTriggerPathList": [],
+  "isDisabled": false,
+  "isFilterable": true,
+  "isLoading": false,
+  "isRequired": false,
+  "isVisible": true,
+  "key": "qpe1pywxxc",
+  "labelAlignment": "left",
+  "labelPosition": "Top",
+  "labelText": "Folder / Project",
+  "labelTextSize": "0.875rem",
+  "labelWidth": 5,
+  "leftColumn": 0,
+  "maxDynamicHeight": 9000,
+  "minDynamicHeight": 4,
+  "minWidth": 450,
+  "mobileBottomRow": 16,
+  "mobileLeftColumn": 10,
+  "mobileRightColumn": 30,
+  "mobileTopRow": 9,
+  "needsErrorInfo": false,
+  "optionLabel": "name",
+  "optionValue": "code",
+  "originalBottomRow": 17,
+  "originalTopRow": 10,
+  "parentColumnSpace": 1.40625,
+  "parentId": "4jmzhdig13",
+  "parentRowSpace": 10,
+  "placeholderText": "Select option",
+  "renderMode": "CANVAS",
+  "responsiveBehavior": "fill",
+  "rightColumn": 64,
+  "serverSideFiltering": false,
+  "sourceData": "{{list_folders.data.folders}}",
+  "topRow": 10,
+  "type": "SELECT_WIDGET",
+  "version": 1,
+  "widgetId": "hei7qfo348",
+  "widgetName": "select_folder"
+}

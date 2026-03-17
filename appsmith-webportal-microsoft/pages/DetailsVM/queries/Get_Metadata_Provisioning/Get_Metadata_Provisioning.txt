@@ -1,0 +1,14 @@
+SELECT 
+    owner, 
+    created_at AS creation_date, 
+    shutdown_date, 
+    deletion_date,
+    folder,
+    "portgroup" AS network,
+    template_used AS template,
+    cpu_cores AS cpu,
+    ram_mb AS ram,
+    disk_gb AS disk
+FROM terraform_remote_state.state_metadata
+WHERE vcenter_uuid = {{appsmith.URL.queryParams.vm_moid}} 
+LIMIT 1;

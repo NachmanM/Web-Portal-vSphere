@@ -1,0 +1,89 @@
+{
+  "animateLoading": true,
+  "backgroundColor": "#ffffff",
+  "borderColor": "#d3d8de",
+  "borderRadius": "1.5rem",
+  "borderWidth": "1",
+  "bottomRow": 38,
+  "boxShadow": "NONE",
+  "children": [
+    {
+      "bottomRow": 340,
+      "canExtend": false,
+      "containerStyle": "none",
+      "detachFromLayout": true,
+      "isLoading": false,
+      "isVisible": true,
+      "leftColumn": 0,
+      "minHeight": 121.5,
+      "parentColumnSpace": 1,
+      "parentId": "1bsohzgx4v",
+      "parentRowSpace": 1,
+      "props": {
+        "canExtend": false,
+        "children": [],
+        "containerStyle": "none",
+        "detachFromLayout": true
+      },
+      "renderMode": "CANVAS",
+      "rightColumn": 90,
+      "topRow": 0,
+      "type": "CANVAS_WIDGET",
+      "version": 1,
+      "widgetId": "4jmzhdig13",
+      "widgetName": "Canvas4"
+    }
+  ],
+  "containerStyle": "card",
+  "displayName": "Container",
+  "dynamicBindingPathList": [],
+  "dynamicHeight": "FIXED",
+  "dynamicPropertyPathList": [
+    {
+      "key": "backgroundColor"
+    }
+  ],
+  "dynamicTriggerPathList": [],
+  "flexVerticalAlignment": "stretch",
+  "hideCard": false,
+  "iconSVG": "/static/media/icon.b4f5f9eb27fc2bb537b53187836aea6c.svg",
+  "isCanvas": true,
+  "isDeprecated": false,
+  "isLoading": false,
+  "isVisible": true,
+  "key": "ll3sn5uos3",
+  "leftColumn": 15,
+  "maxDynamicHeight": 9000,
+  "minDynamicHeight": 10,
+  "minWidth": 450,
+  "needsErrorInfo": false,
+  "onCanvasUI": {
+    "disableParentSelection": false,
+    "focusBGCSSVar": "--on-canvas-ui-widget-focus",
+    "focusColorCSSVar": "--on-canvas-ui-widget-selection",
+    "selectionBGCSSVar": "--on-canvas-ui-widget-selection",
+    "selectionColorCSSVar": "--on-canvas-ui-widget-focus"
+  },
+  "parentColumnSpace": 1.40625,
+  "parentId": "0",
+  "parentRowSpace": 10,
+  "renderMode": "CANVAS",
+  "responsiveBehavior": "fill",
+  "rightColumn": 37,
+  "searchTags": [
+    "div",
+    "parent",
+    "group"
+  ],
+  "shouldScrollContents": true,
+  "tabId": "",
+  "tags": [
+    "Layout"
+  ],
+  "thumbnailSVG": "/static/media/thumbnail.6cb355b93146b5347bbb048a568ed446.svg",
+  "topRow": 4,
+  "type": "CONTAINER_WIDGET",
+  "version": 1,
+  "widgetId": "1bsohzgx4v",
+  "widgetName": "Container2"
+}

@@ -1,0 +1,55 @@
+{
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 55,
+  "dynamicBindingPathList": [
+    {
+      "key": "truncateButtonColor"
+    },
+    {
+      "key": "fontFamily"
+    },
+    {
+      "key": "borderRadius"
+    },
+    {
+      "key": "text"
+    }
+  ],
+  "dynamicHeight": "AUTO_HEIGHT",
+  "dynamicTriggerPathList": [],
+  "fontFamily": "{{appsmith.theme.fontFamily.appFont}}",
+  "fontSize": "1rem",
+  "fontStyle": "BOLD",
+  "isLoading": false,
+  "isVisible": true,
+  "key": "zvg4gwcyq4",
+  "leftColumn": 14,
+  "maxDynamicHeight": 9000,
+  "minDynamicHeight": 4,
+  "minWidth": 450,
+  "mobileBottomRow": 35,
+  "mobileLeftColumn": 0,
+  "mobileRightColumn": 7,
+  "mobileTopRow": 31,
+  "needsErrorInfo": false,
+  "originalBottomRow": 56,
+  "originalTopRow": 2,
+  "overflow": "NONE",
+  "parentColumnSpace": 16.59375,
+  "parentId": "0",
+  "parentRowSpace": 10,
+  "renderMode": "CANVAS",
+  "responsiveBehavior": "fill",
+  "rightColumn": 58,
+  "shouldTruncate": false,
+  "text": "<div style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f3f6f8; padding: 20px; color: #333; font-size: 13px; height: 100%;\">\n    <div style=\"margin-bottom: 15px; font-size: 18px; color: #2c3e50;\">\n        🖥️ <b>{{VM_Details.data?.vm_info?.name || (Get_Metadata_Provisioning.data?.[0] ? 'Provisioning...' : 'Unknown VM')}}</b>\n    </div>\n    <div style=\"display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;\">\n        <div style=\"background: #fff; border: 1px solid #d3d8de; border-top: 3px solid #006a91; border-radius: 3px; padding: 15px;\">\n            <h4 style=\"margin: 0 0 15px 0; font-size: 14px; font-weight: 600; color: #000;\">Virtual Machine Details</h4>\n            <table style=\"width: 100%; border-collapse: collapse; font-size: 12px;\">\n                <tr>\n                    <td style=\"padding-bottom: 8px; color: #555; width: 40%;\">Power Status</td>\n                    <td style=\"padding-bottom: 8px;\">{{VM_Details.data?.vm_info?.state === 'poweredOn' ? '🟢 Powered On' : (VM_Details.data?.vm_info?.state ? '🔴 ' + VM_Details.data.vm_info.state : (Get_Metadata_Provisioning.data?.[0] ? '⏳ Provisioning' : 'Unknown'))}}</td>\n                </tr>\n                <tr>\n                    <td style=\"padding-bottom: 8px; color: #555;\">Guest OS</td>\n                    <td style=\"padding-bottom: 8px;\">{{VM_Details.data?.vm_info?.os || Get_Metadata_Provisioning.data?.[0]?.template || 'Unknown'}}</td>\n                </tr>\n                <tr>\n                    <td style=\"padding-bottom: 8px; color: #555;\">IP Address</td>\n                    <td style=\"padding-bottom: 8px; color: #006a91; cursor: pointer;\">{{VM_Details.data?.vm_info?.ip_address || (Get_Metadata_Provisioning.data?.[0] ? 'Waiting for DHCP...' : 'Unknown')}}</td>\n                </tr>\n                <tr>\n                    <td style=\"padding-bottom: 8px; color: #555;\">Owner</td>\n                    <td style=\"padding-bottom: 8px;\">{{Get_Metadata.data?.[0]?.owner || Get_Metadata_Provisioning.data?.[0]?.owner || 'N/A'}}</td>\n                </tr>\n                <tr>\n                    <td style=\"padding-bottom: 8px; color: #555;\">Created</td>\n                    <td style=\"padding-bottom: 8px;\">{{Get_Metadata.data?.[0]?.creation_date ? moment(Get_Metadata.data[0].creation_date).format('YYYY-MM-DD HH:mm') : (Get_Metadata_Provisioning.data?.[0]?.creation_date ? moment(Get_Metadata_Provisioning.data[0].creation_date).format('YYYY-MM-DD HH:mm') : 'N/A')}}</td>\n                </tr>\n                <tr>\n                    <td style=\"padding-bottom: 8px; color: #555;\">Shutdown</td>\n                    <td style=\"padding-bottom: 8px;\">{{Get_Metadata.data?.[0]?.shutdown_date ? moment(Get_Metadata.data[0].shutdown_date).format('YYYY-MM-DD') : (Get_Metadata_Provisioning.data?.[0]?.shutdown_date ? moment(Get_Metadata_Provisioning.data[0].shutdown_date).format('YYYY-MM-DD') : 'N/A')}}</td>\n                </tr>\n                <tr>\n                    <td style=\"padding-bottom: 0px; color: #555;\">Deletion</td>\n                    <td style=\"padding-bottom: 0px;\">{{Get_Metadata.data?.[0]?.deletion_date ? moment(Get_Metadata.data[0].deletion_date).format('YYYY-MM-DD') : (Get_Metadata_Provisioning.data?.[0]?.deletion_date ? moment(Get_Metadata_Provisioning.data[0].deletion_date).format('YYYY-MM-DD') : 'N/A')}}</td>\n                </tr>\n            </table>\n        </div>\n        <div style=\"background: #fff; border: 1px solid #d3d8de; border-radius: 3px; padding: 15px;\">\n            <h4 style=\"margin: 0 0 15px 0; font-size: 14px; font-weight: 600; color: #000;\">VM Hardware</h4>\n            <table style=\"width: 100%; border-collapse: collapse; font-size: 12px;\">\n                <tr>\n                    <td style=\"padding-bottom: 8px; color: #555; width: 40%;\">CPU</td>\n                    <td style=\"padding-bottom: 8px;\">{{VM_Details.data?.vm_info?.cpu_count || Get_Metadata_Provisioning.data?.[0]?.cpu || 0}} vCPU</td>\n                </tr>\n                <tr>\n                    <td style=\"padding-bottom: 8px; color: #555;\">Memory</td>\n                    <td style=\"padding-bottom: 8px;\">{{VM_Details.data?.vm_info?.ram_gb || (Get_Metadata_Provisioning.data?.[0]?.ram ? (Get_Metadata_Provisioning.data[0].ram / 1024).toFixed(1) : 0)}} GB</td>\n                </tr>\n                {{VM_Details.data?.vm_info?.disks?.map((d, i) => '<tr><td style=\"padding-bottom: 8px; color: #555;\">Disk ' + (i+1) + '</td><td style=\"padding-bottom: 8px;\">' + d.capacity_gb + ' GB</td></tr>').join('') || (Get_Metadata_Provisioning.data?.[0]?.disk ? '<tr><td style=\"padding-bottom: 8px; color: #555;\">Disk 1</td><td style=\"padding-bottom: 8px;\">' + Get_Metadata_Provisioning.data[0].disk + ' GB</td></tr>' : '')}}\n                {{VM_Details.data?.vm_info?.networks?.map((n, i) => '<tr><td style=\"padding-bottom: 8px; color: #555;\">Network ' + (i+1) + '</td><td style=\"padding-bottom: 8px;\">' + n.name + '</td></tr>').join('') || (Get_Metadata_Provisioning.data?.[0]?.network ? '<tr><td style=\"padding-bottom: 8px; color: #555;\">Network 1</td><td style=\"padding-bottom: 8px;\">' + Get_Metadata_Provisioning.data[0].network + '</td></tr>' : '')}}\n            </table>\n        </div>\n        <div style=\"background: #fff; border: 1px solid #d3d8de; border-radius: 3px; padding: 15px;\">\n            <h4 style=\"margin: 0 0 15px 0; font-size: 14px; font-weight: 600; color: #000;\">Related Objects</h4>\n            <table style=\"width: 100%; border-collapse: collapse; font-size: 12px;\">\n                <tr>\n                    <td style=\"padding-bottom: 8px; color: #555; width: 40%;\">ESXi Host</td>\n                    <td style=\"padding-bottom: 8px;\">{{VM_Details.data?.vm_info?.host || (Get_Metadata_Provisioning.data?.[0] ? 'Pending Assignment' : 'Unknown')}}</td>\n                </tr>\n                <tr>\n                    <td style=\"padding-bottom: 8px; color: #555;\">Folder</td>\n                    <td style=\"padding-bottom: 8px;\">{{VM_Details.data?.vm_info?.folder || Get_Metadata_Provisioning.data?.[0]?.folder || 'Unknown'}}</td>\n                </tr>\n                <tr>\n                    <td style=\"padding-bottom: 8px; color: #555;\">MOID</td>\n                    <td style=\"padding-bottom: 8px;\">{{VM_Details.data?.vm_info?.moid || (Get_Metadata_Provisioning.data?.[0] ? 'Provisioning...' : 'Unknown')}}</td>\n                </tr>\n            </table>\n        </div>\n    </div>\n</div>",
+  "textAlign": "LEFT",
+  "textColor": "#231F20",
+  "topRow": 2,
+  "truncateButtonColor": "{{appsmith.theme.colors.primaryColor}}",
+  "type": "TEXT_WIDGET",
+  "version": 1,
+  "widgetId": "2o5qeb6jzr",
+  "widgetName": "Text2"
+}

@@ -1,0 +1,81 @@
+/* ============================================
+   vCenter Web Portal — Design System
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ---------- CSS Variables ---------- */
+:root {
+  --primary: #7C3AED;
+  --primary-light: #A78BFA;
+  --primary-dark: #5B21B6;
+  --primary-bg: rgba(124, 58, 237, 0.08);
+  --primary-border: rgba(124, 58, 237, 0.25);
+
+  --bg-body: #F3F4F6;
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #1E1B2E;
+  --bg-sidebar-hover: #2D2A3E;
+  --bg-sidebar-active: #3B3557;
+  --bg-overlay: rgba(0, 0, 0, 0.45);
+
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  --text-sidebar: #D1D5DB;
+  --text-sidebar-bright: #F9FAFB;
+
+  --border: #E5E7EB;
+  --border-focus: var(--primary);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --sidebar-width: 260px;
+  --navbar-height: 52px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-body);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
+}

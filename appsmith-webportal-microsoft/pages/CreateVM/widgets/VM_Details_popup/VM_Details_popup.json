@@ -1,0 +1,88 @@
+{
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 299,
+  "boxShadow": "none",
+  "canEscapeKeyClose": true,
+  "canOutsideClickClose": true,
+  "children": [
+    {
+      "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+      "bottomRow": 280,
+      "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
+      "canExtend": true,
+      "detachFromLayout": true,
+      "dynamicBindingPathList": [
+        {
+          "key": "borderRadius"
+        },
+        {
+          "key": "boxShadow"
+        }
+      ],
+      "dynamicHeight": "AUTO_HEIGHT",
+      "flexLayers": [],
+      "isDisabled": false,
+      "isLoading": false,
+      "isVisible": true,
+      "key": "2495g9yt42",
+      "leftColumn": 0,
+      "maxDynamicHeight": 9000,
+      "minDynamicHeight": 4,
+      "minHeight": 320,
+      "minWidth": 450,
+      "mobileBottomRow": 240,
+      "mobileLeftColumn": 0,
+      "mobileRightColumn": 398.25,
+      "mobileTopRow": 0,
+      "needsErrorInfo": false,
+      "parentColumnSpace": 1,
+      "parentId": "36s98mifh3",
+      "parentRowSpace": 1,
+      "renderMode": "CANVAS",
+      "responsiveBehavior": "fill",
+      "rightColumn": 398.25,
+      "shouldScrollContents": false,
+      "topRow": 0,
+      "type": "CANVAS_WIDGET",
+      "version": 1,
+      "widgetId": "46g8pshrcv",
+      "widgetName": "Canvas3"
+    }
+  ],
+  "detachFromLayout": true,
+  "dynamicBindingPathList": [
+    {
+      "key": "borderRadius"
+    }
+  ],
+  "dynamicHeight": "AUTO_HEIGHT",
+  "dynamicTriggerPathList": [],
+  "height": 280,
+  "isCanvas": true,
+  "isLoading": false,
+  "key": "jqnbk1q9i0",
+  "leftColumn": 16,
+  "maxDynamicHeight": 9000,
+  "minDynamicHeight": 10,
+  "minHeight": 280,
+  "mobileBottomRow": 43,
+  "mobileLeftColumn": 16,
+  "mobileRightColumn": 40,
+  "mobileTopRow": 19,
+  "needsErrorInfo": false,
+  "originalBottomRow": 259,
+  "originalTopRow": 19,
+  "parentColumnSpace": 16.59375,
+  "parentId": "0",
+  "parentRowSpace": 10,
+  "renderMode": "CANVAS",
+  "rightColumn": 40,
+  "shouldScrollContents": true,
+  "topRow": 19,
+  "type": "MODAL_WIDGET",
+  "version": 2,
+  "widgetId": "36s98mifh3",
+  "widgetName": "VM_Details_popup",
+  "width": 708
+}

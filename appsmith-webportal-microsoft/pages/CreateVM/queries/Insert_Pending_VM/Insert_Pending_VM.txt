@@ -1,0 +1,5 @@
+INSERT INTO terraform_remote_state.vcenter_inventory_cache 
+(vm_moid, vm_name, folder_name, power_state) 
+VALUES 
+('pending-' || gen_random_uuid(), {{input_vm_name.text}}, {{select_folder.selectedOptionLabel}}, 'provisioning')
+RETURNING vm_moid;

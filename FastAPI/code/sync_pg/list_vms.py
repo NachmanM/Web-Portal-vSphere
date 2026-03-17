@@ -1,6 +1,7 @@
 from pyVim.connect import SmartConnect, Disconnect
 from pyVmomi import vim
 import ssl
+import os
 
 def fetch_all_vms_from_vcenter(vcenter_host, vcenter_user, vcenter_password):
     context = ssl._create_unverified_context()
@@ -39,12 +40,17 @@ def fetch_all_vms_from_vcenter(vcenter_host, vcenter_user, vcenter_password):
                 
                 # In vSphere, a VM's immediate parent is always a vim.Folder object
                 folder_name = vm.parent.name if vm.parent else "Unknown"
+
+                networks = []
+                for net in vm.network:
+                    networks.append(net.name)
                 
                 vm_inventory.append({
                     "vm_moid": vm_moid,
                     "name": vm_name,
                     "folder": folder_name,
-                    "power_state": power_state
+                    "power_state": power_state,
+                    "portgroups": networks
                 })
                 
             except vim.fault.NoPermission:
@@ -61,6 +67,41 @@ def fetch_all_vms_from_vcenter(vcenter_host, vcenter_user, vcenter_password):
     finally:
         Disconnect(service_instance)
 
+def fetch_all_templates():
+    VCENTER_PWD = os.getenv("VCENTER_PWD")
+    # 1. BYPASS SSL (Common in internal labs, strictly unsafe for prod)
+    context = ssl._create_unverified_context()
+
+    # 2. CONNECT
+    # Connects to the API and returns the ServiceInstance (SI)
+    si = SmartConnect(
+        host="10.190.20.10",
+        user="administrator@vsphere.local",
+        pwd=f"{VCENTER_PWD}",
+        sslContext=context
+    )
+
+    try:
+        # 3. GET CONTENT & VIEW MANAGER
+        content = si.RetrieveContent()
+
+        container = content.viewManager.CreateContainerView(
+            content.rootFolder,
+            [vim.VirtualMachine],
+            True
+        )
+
+        templates = []
+        for vm in container.view:
+            if vm.config.template:
+                templates.append(vm.config.name)
+        container.Destroy()
+        return templates
+        
+
+    finally:
+        Disconnect(si)
+
 # --- Execution Example ---
 if __name__ == "__main__":
     import os
@@ -74,3 +115,6 @@ if __name__ == "__main__":
     # Print a sample of the output
     for vm in vms[:5]:
         print(vm)
+
+    for t in fetch_all_templates():
+        print(t)

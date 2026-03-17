@@ -1,0 +1,15 @@
+{
+	"vm_name": {{input_vm_name.text}},
+	"folder": {{select_folder.selectedOptionLabel}},
+	"template": {{select_template.selectedOptionLabel}},
+	"portgroup": {{select_portgroup.selectedOptionValue}},
+	"is_windows_image": "{{WinCheckJS.isWindowsTemplate(select_template.selectedOptionLabel)}}",
+	"ram_size": {{input_ram_size.text}},
+	"disk_size_gb": [{{JSON.stringify(input_disk_size_gb.text)}}],
+	"cpu_number": {{select_cpu_core_number.selectedOptionValue}},
+	"owner": {{appsmith.user.name}},
+	"shutdown_date": {{date_picker_shutdown.selectedDate}},
+  "deletion_date": {{date_picker_deletion.selectedDate}},
+
+	"transaction_uuid": "{{this.params.transaction_uuid}}"
+}

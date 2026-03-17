@@ -1,0 +1,11 @@
+{
+  "gitSyncId": "69a2ef7fe1f0925138a365ca_6e683f3c-fb1c-4c1e-8281-b15ed64a05c4",
+  "id": "DetailsVM_RedirectUser",
+  "unpublishedCollection": {
+    "name": "RedirectUser",
+    "pageId": "DetailsVM",
+    "pluginId": "js-plugin",
+    "pluginType": "JS",
+    "variables": []
+  }
+}

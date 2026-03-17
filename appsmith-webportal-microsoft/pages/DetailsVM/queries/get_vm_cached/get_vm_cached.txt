@@ -1,0 +1,3 @@
+SELECT vm_moid, vm_name, folder_name, power_state 
+FROM terraform_remote_state.vcenter_inventory_cache 
+ORDER BY folder_name, vm_name;

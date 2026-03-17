@@ -1,0 +1,11 @@
+{
+  "gitSyncId": "69a2ef7fe1f0925138a365ca_e3ee277d-3c0d-4d4b-8c0a-942f74b8e439",
+  "id": "CreateVM_ShowVMDetailsPopup",
+  "unpublishedCollection": {
+    "name": "ShowVMDetailsPopup",
+    "pageId": "CreateVM",
+    "pluginId": "js-plugin",
+    "pluginType": "JS",
+    "variables": []
+  }
+}

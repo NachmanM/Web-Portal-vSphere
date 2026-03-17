@@ -1,0 +1,34 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4.2.4
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+    networks:
+      - shared-net
+      - rabbitmq-net
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+
+  vcenter-worker:
+    build:
+      context: ./Consumers/vCenter
+      dockerfile: Dockerfile
+      
+    container_name: vcenter-worker
+    ports:
+      - "5672:5672"
+    networks:
+      - rabbitmq-net
+
+networks:
+  shared-net:
+    external: true
+    name: shared-bridge
+
+  rabbitmq-net:
+    external: true
+    name: shared-rabbitmq
+
+volumes:
+  rabbitmq-data:

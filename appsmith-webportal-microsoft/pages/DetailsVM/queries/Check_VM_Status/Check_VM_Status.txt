@@ -1,0 +1,4 @@
+SELECT vcenter_uuid, status 
+FROM terraform_remote_state.state_metadata 
+WHERE vcenter_uuid = {{appsmith.URL.queryParams.vm_moid}}
+   OR state_key::text = REPLACE({{appsmith.URL.queryParams.vm_moid}}, 'pending-', '');

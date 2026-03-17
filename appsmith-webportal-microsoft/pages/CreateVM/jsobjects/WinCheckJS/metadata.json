@@ -1,0 +1,11 @@
+{
+  "gitSyncId": "69a2ef7fe1f0925138a365ca_94fb39ac-07cd-457d-8d19-cd42211fe8c7",
+  "id": "CreateVM_WinCheckJS",
+  "unpublishedCollection": {
+    "name": "WinCheckJS",
+    "pageId": "CreateVM",
+    "pluginId": "js-plugin",
+    "pluginType": "JS",
+    "variables": []
+  }
+}

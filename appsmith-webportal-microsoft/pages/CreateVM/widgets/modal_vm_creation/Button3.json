@@ -1,0 +1,56 @@
+{
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 24,
+  "boxShadow": "none",
+  "buttonColor": "{{appsmith.theme.colors.primaryColor}}",
+  "buttonStyle": "PRIMARY_BUTTON",
+  "buttonVariant": "PRIMARY",
+  "disabledWhenInvalid": false,
+  "dynamicBindingPathList": [
+    {
+      "key": "buttonColor"
+    },
+    {
+      "key": "borderRadius"
+    }
+  ],
+  "dynamicPropertyPathList": [
+    {
+      "key": "onClick"
+    }
+  ],
+  "dynamicTriggerPathList": [
+    {
+      "key": "onClick"
+    }
+  ],
+  "isDefaultClickDisabled": true,
+  "isDisabled": false,
+  "isLoading": false,
+  "isVisible": true,
+  "key": "gbtg228zm3",
+  "leftColumn": 47,
+  "minWidth": 120,
+  "mobileBottomRow": 22,
+  "mobileLeftColumn": 47,
+  "mobileRightColumn": 63,
+  "mobileTopRow": 18,
+  "needsErrorInfo": false,
+  "onClick": "{{\n  (function() {\n    // 1. Close the modal\n    closeModal('modal_vm_creation');\n    \n    // 2. Navigate to the Details page using the stored MOID\n    navigateTo('DetailsVM', { \"vm_moid\": appsmith.store.new_vm_moid }, 'SAME_WINDOW');\n  })()\n}}",
+  "originalBottomRow": 24,
+  "originalTopRow": 20,
+  "parentId": "zaszg47tgn",
+  "placement": "CENTER",
+  "recaptchaType": "V3",
+  "renderMode": "CANVAS",
+  "resetFormOnClick": false,
+  "responsiveBehavior": "hug",
+  "rightColumn": 63,
+  "text": "Go To VM",
+  "topRow": 20,
+  "type": "BUTTON_WIDGET",
+  "version": 1,
+  "widgetId": "ckj6zppff3",
+  "widgetName": "Button3"
+}

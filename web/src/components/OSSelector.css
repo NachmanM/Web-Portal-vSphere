@@ -1,0 +1,110 @@
+.os-selector-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.os-cards {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.os-card {
+    flex: 0 0 150px;
+    padding: 20px 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    background: var(--bg-card);
+}
+
+.os-card:hover {
+    border-color: var(--primary-light);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.os-card.selected {
+    border-color: var(--primary);
+    background: var(--primary-bg);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+}
+
+.os-card img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.os-card-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.sub-os-container {
+    margin-bottom: 20px;
+    padding: 16px;
+    background: var(--bg-secondary, #f8fafc);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+}
+
+.sub-os-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text-secondary, #64748b);
+}
+
+.sub-os-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.sub-os-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--bg-card, #ffffff);
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: var(--radius-sm, 6px);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-primary, #1e293b);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sub-os-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.sub-os-badge:hover {
+    border-color: var(--primary-light, #a78bfa);
+    background: var(--bg-hover, #f1f5f9);
+    transform: translateY(-1px);
+}
+
+.sub-os-badge.selected {
+    background: var(--primary, #7c3aed);
+    color: #fff;
+    border-color: var(--primary, #7c3aed);
+    box-shadow: 0 2px 4px rgba(124, 58, 237, 0.3);
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}

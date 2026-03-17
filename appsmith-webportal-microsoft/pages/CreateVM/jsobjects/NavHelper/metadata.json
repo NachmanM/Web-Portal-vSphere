@@ -1,0 +1,11 @@
+{
+  "gitSyncId": "69a2ef7fe1f0925138a365ca_e4014495-7051-4508-bd8a-09e75720be68",
+  "id": "CreateVM_NavHelper",
+  "unpublishedCollection": {
+    "name": "NavHelper",
+    "pageId": "CreateVM",
+    "pluginId": "js-plugin",
+    "pluginType": "JS",
+    "variables": []
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "gitSyncId": "69a2ef7fe1f0925138a365ca_e75a3aa2-8c19-47b7-a703-ecd6f0813e4d",
+  "id": "DetailsVM_Provisioning_Poller",
+  "unpublishedCollection": {
+    "name": "Provisioning_Poller",
+    "pageId": "DetailsVM",
+    "pluginId": "js-plugin",
+    "pluginType": "JS",
+    "variables": []
+  }
+}

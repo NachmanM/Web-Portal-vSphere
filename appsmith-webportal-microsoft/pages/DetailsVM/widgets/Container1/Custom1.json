@@ -1,0 +1,74 @@
+{
+  "backgroundColor": "#FFFFFF",
+  "borderColor": "#E0DEDE",
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "borderWidth": "1",
+  "bottomRow": 139,
+  "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
+  "defaultModel": "{{\n  (function() {\n    const dbData = get_vm_cached.data || [];\n    const uniqueFolders = [...new Set(dbData.map(row => row.folder_name))];\n    \n    const formattedFolders = uniqueFolders.map(folderName => {\n      const vmsInFolder = dbData.filter(vm => vm.folder_name === folderName);\n      \n      const mappedVms = vmsInFolder.map(vm => {\n        let statusIcon = '🔴'; \n        if (vm.power_state === 'poweredOn') statusIcon = '🟢';\n        else if (vm.power_state === 'provisioning') statusIcon = '🟡';\n        \n        return { \n          id: vm.vm_moid, \n          name: vm.vm_name, \n          statusIcon: statusIcon \n        };\n      });\n      \n      return { name: folderName, vms: mappedVms };\n    });\n    \n    // The widget receives this as appsmith.model.folders\n    return { folders: formattedFolders };\n  })()\n}}",
+  "dynamicBindingPathList": [
+    {
+      "key": "theme"
+    },
+    {
+      "key": "borderRadius"
+    },
+    {
+      "key": "boxShadow"
+    },
+    {
+      "key": "defaultModel"
+    }
+  ],
+  "dynamicHeight": "FIXED",
+  "dynamicPropertyPathList": [
+    {
+      "key": "onVmClick"
+    }
+  ],
+  "dynamicTriggerPathList": [
+    {
+      "key": "onVmClick"
+    }
+  ],
+  "events": [
+    "onVmClick"
+  ],
+  "isCanvas": false,
+  "isLoading": false,
+  "isSearchWildcard": true,
+  "isVisible": true,
+  "key": "w2ajeuilha",
+  "leftColumn": 0,
+  "maxDynamicHeight": 9000,
+  "minDynamicHeight": 4,
+  "mobileBottomRow": 120,
+  "mobileLeftColumn": 16,
+  "mobileRightColumn": 39,
+  "mobileTopRow": 90,
+  "needsErrorInfo": false,
+  "onVmClick": "{{\n  (async () => {\n    // 1. Update the URL parameter with the clicked VM ID\n    await navigateTo('DetailsVM', { \"vm_moid\": Custom1.model.selectedId }, 'SAME_WINDOW');\n    \n    // 2. Manually trigger your data query to refresh with the new ID\n    // Replace 'get_vm_details' with the actual name of your query\n    await VM_Details.run();\n    \n \n  })()\n}}",
+  "originalBottomRow": 384,
+  "originalTopRow": 245,
+  "parentColumnSpace": 20.25,
+  "parentId": "0gn6zmmukv",
+  "parentRowSpace": 10,
+  "renderMode": "CANVAS",
+  "rightColumn": 62,
+  "srcDoc": {
+    "css": ".vcenter-sidebar {\n  font-family: system-ui, -apple-system, sans-serif;\n  padding: 10px;\n  background: #ffffff;\n  /* Change height to fill the Appsmith widget box */\n  height: 100%;\n  /* Enable scrolling inside the widget if the list is long */\n  overflow-y: auto;\n  /* Hide horizontal scroll if folder names are long */\n  overflow-x: hidden;\n}\n\n.folder-group {\n  margin-bottom: 8px;\n}\n\n.folder-name {\n  font-weight: 600;\n  cursor: pointer;\n  padding: 6px;\n  user-select: none;\n  border-radius: 4px;\n}\n\n.folder-name:hover {\n  background-color: #f3f4f6;\n}\n\n.vm-list {\n  list-style-type: none;\n  padding-left: 24px;\n  margin-top: 4px;\n  margin-bottom: 0;\n}\n\n.vm-item {\n  padding: 6px;\n  font-size: 14px;\n  cursor: pointer;\n  border-radius: 4px;\n  color: #374151;\n}\n\n.vm-item:hover {\n  background-color: #e5e7eb;\n  color: #9941ec; /* Your primary purple color */\n}",
+    "html": "<!-- no need to write html, head, body tags, it is handled by the widget -->\n<div id=\"root\"></div>\n",
+    "js": "import React, { useState, useEffect } from \"https://esm.sh/react@18.2.0\";\nimport ReactDOM from \"https://esm.sh/react-dom@18.2.0\";\nfunction SidebarTree() {\n  const [folders, setFolders] = useState(appsmith.model.folders || []);\n  useEffect(() => {\n    // This makes the widget react dynamically to get_vm_cached updates\n    const handleModelChange = newModel => {\n      if (newModel && newModel.folders) {\n        setFolders(newModel.folders);\n      }\n    };\n    appsmith.onModelChange(handleModelChange);\n  }, []);\n  return /*#__PURE__*/React.createElement(\"div\", {\n    className: \"vcenter-sidebar\"\n  }, folders.map(folder => /*#__PURE__*/React.createElement(\"details\", {\n    key: folder.name,\n    className: \"folder-group\"\n  }, /*#__PURE__*/React.createElement(\"summary\", {\n    className: \"folder-name\"\n  }, \"\\uD83D\\uDCC1 \", folder.name), /*#__PURE__*/React.createElement(\"ul\", {\n    className: \"vm-list\"\n  }, folder.vms.map(vm => /*#__PURE__*/React.createElement(\"li\", {\n    key: vm.id,\n    className: \"vm-item\",\n    onClick: () => {\n      // 1. Force the ID into the widget's model\n      appsmith.updateModel({\n        selectedId: vm.id\n      });\n\n      // 2. Trigger the event signal\n      appsmith.triggerEvent(\"onVmClick\");\n    }\n  }, vm.statusIcon, \" \", vm.name))))));\n}\nappsmith.onReady(() => {\n  ReactDOM.render(/*#__PURE__*/React.createElement(SidebarTree, null), document.getElementById(\"root\"));\n});"
+  },
+  "theme": "{{appsmith.theme}}",
+  "topRow": 0,
+  "type": "CUSTOM_WIDGET",
+  "uncompiledSrcDoc": {
+    "css": ".vcenter-sidebar {\n  font-family: system-ui, -apple-system, sans-serif;\n  padding: 10px;\n  background: #ffffff;\n  /* Change height to fill the Appsmith widget box */\n  height: 100%; \n  /* Enable scrolling inside the widget if the list is long */\n  overflow-y: auto; \n  /* Hide horizontal scroll if folder names are long */\n  overflow-x: hidden; \n}\n.folder-group {\n  margin-bottom: 8px;\n}\n\n.folder-name {\n  font-weight: 600;\n  cursor: pointer;\n  padding: 6px;\n  user-select: none;\n  border-radius: 4px;\n}\n\n.folder-name:hover {\n  background-color: #f3f4f6;\n}\n\n.vm-list {\n  list-style-type: none;\n  padding-left: 24px;\n  margin-top: 4px;\n  margin-bottom: 0;\n}\n\n.vm-item {\n  padding: 6px;\n  font-size: 14px;\n  cursor: pointer;\n  border-radius: 4px;\n  color: #374151;\n}\n\n.vm-item:hover {\n  background-color: #e5e7eb;\n  color: #9941ec; /* Your primary purple color */\n}",
+    "html": "<!-- no need to write html, head, body tags, it is handled by the widget -->\n<div id=\"root\"></div>\n",
+    "js": "import React, { useState, useEffect } from \"https://esm.sh/react@18.2.0\";\nimport ReactDOM from \"https://esm.sh/react-dom@18.2.0\";\n\nfunction SidebarTree() {\n  const [folders, setFolders] = useState(appsmith.model.folders || []);\n\n  useEffect(() => {\n    // This makes the widget react dynamically to get_vm_cached updates\n    const handleModelChange = (newModel) => {\n      if (newModel && newModel.folders) {\n        setFolders(newModel.folders);\n      }\n    };\n    appsmith.onModelChange(handleModelChange);\n  }, []);\n\n  return (\n    <div className=\"vcenter-sidebar\">\n      {folders.map(folder => (\n        <details key={folder.name} className=\"folder-group\">\n          <summary className=\"folder-name\">📁 {folder.name}</summary>\n          <ul className=\"vm-list\">\n            {folder.vms.map(vm => (\n              <li \n                key={vm.id} \n                className=\"vm-item\"\n                onClick={() => {\n  // 1. Force the ID into the widget's model\n  appsmith.updateModel({ selectedId: vm.id });\n  \n  // 2. Trigger the event signal\n  appsmith.triggerEvent(\"onVmClick\");\n}}\n              >\n                {vm.statusIcon} {vm.name}\n              </li>\n            ))}\n          </ul>\n        </details>\n      ))}\n    </div>\n  );\n}\n\nappsmith.onReady(() => {\n  ReactDOM.render(<SidebarTree />, document.getElementById(\"root\"));\n});"
+  },
+  "version": 1,
+  "widgetId": "q1t1pe46un",
+  "widgetName": "Custom1"
+}
