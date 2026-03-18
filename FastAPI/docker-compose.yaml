@@ -18,6 +18,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+      - "5672:5672"
     networks:
       - shared-net
     env_file:
@@ -26,6 +27,7 @@ services:
       - ./code:/FastAPI
     depends_on:
       - db
+
 
 networks:
   shared-net:

@@ -23,10 +23,10 @@ import json
     # )
     # channel.start_consuming()
 
-async def sub():
+async def consumer():
     async with await aio_pika.connect_robust("amqp://guest:guest@localhost/") as conn:
         async with conn.channel() as channel:
-            queue = await channel.declare_queue("test_async")
+            queue = await channel.declare_queue("create_vm")
 
             async with queue.iterator() as queue_iter:
                 async for message in queue_iter:
@@ -41,7 +41,8 @@ async def sub():
                             
                         except ValueError as e:
                             print(f"Worng value format:: {e}")
+                            await msg.nack(requeue=False)
 
 
 if __name__ == '__main__':
-    asyncio.run(sub())
+    asyncio.run(consumer())

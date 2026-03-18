@@ -23,7 +23,7 @@ import sys
 async def pub():
     async with await aio_pika.connect_robust("amqp://guest:guest@localhost/") as conn:
         async with conn.channel() as channel:
-            queue = await channel.declare_queue("test_async")
+            queue = await channel.declare_queue("create_vm")
 
             await channel.default_exchange.publish(
                 aio_pika.Message(b'{"Hello": "World async"}'),

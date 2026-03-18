@@ -16,6 +16,8 @@ services:
       dockerfile: Dockerfile
       
     container_name: vcenter-worker
+    env_file:
+      - .env
     ports:
       - "5672:5672"
     networks:
