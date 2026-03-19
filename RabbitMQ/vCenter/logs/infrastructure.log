@@ -1,0 +1,83 @@
+2026-03-19 08:41:34,757 - RabbitWorker - INFO - Infrastructure Worker active. Listening to queue: 'create_vm'
+2026-03-19 08:59:01,339 - RabbitWorker - INFO - [162b4249-e956-48d3-b459-9169218e4ac1] Received provisioning request for VM: t5
+2026-03-19 08:59:01,340 - InfraService - INFO - [162b4249-e956-48d3-b459-9169218e4ac1] Initializing Terraform workspace.
+2026-03-19 08:59:01,414 - InfraService - ERROR - [162b4249-e956-48d3-b459-9169218e4ac1] Terraform command failed. STDOUT: [0m[1mInitializing the backend...[0m
+[0m[1m
+[0m[1m[33mThe currently selected workspace (dbed27c2-9af4-41dd-8b42-5594690359da) does not exist.[0m[0m
+  This is expected behavior when the selected workspace did not have an
+  existing non-empty state. Please enter a number to select a workspace:
+  
+  1. default
+  2. 24ff21b6-96f8-4256-a852-958c3f522522
+  3. 85ecdb03-0547-43f9-bc45-09fc3d724f48
+  4. 8ccbb27e-bc8d-44f5-b92f-b39d5410addb
+  5. 8cdd757d-f0b6-455c-829a-da02796867e2
+  6. adf4dc1e-c6d5-4020-b384-eeb0b64ebe6c
+  7. ca37acbd-b931-48d4-a3c5-5f239f5f0aff
+  8. null
+
+  [1mEnter a value:[0m [0m[0m[1mInitializing modules...[0m
+ | STDERR: [31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mFailed to select workspace: EOF[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m
+[31m╵[0m[0m
+
+2026-03-19 08:59:01,414 - InfraService - INFO - [162b4249-e956-48d3-b459-9169218e4ac1] Cleaning up pending database records due to failure.
+2026-03-19 08:59:01,524 - RabbitWorker - ERROR - [162b4249-e956-48d3-b459-9169218e4ac1] Provisioning failed. Acknowledging message to prevent loop. Details: {'detail': 'Terraform command failed: Error: \x1b[31m╷\x1b[0m\x1b[0m\n\x1b[31m│\x1b[0m \x1b[0m\x1b[1m\x1b[31mError: \x1b[0m\x1b[0m\x1b[1mFailed to select workspace: EOF\x1b[0m\n\x1b[31m│\x1b[0m \x1b[0m\n\x1b[31m│\x1b[0m \x1b[0m\x1b[0m\n\x1b[31m╵\x1b[0m\x1b[0m\n'}
+2026-03-19 09:00:55,528 - RabbitWorker - INFO - Infrastructure Worker active. Listening to queue: 'create_vm'
+2026-03-19 09:01:13,400 - RabbitWorker - INFO - [a3f1dd72-e787-4305-824c-3bd1b84b9418] Received provisioning request for VM: t5
+2026-03-19 09:01:13,400 - InfraService - INFO - [a3f1dd72-e787-4305-824c-3bd1b84b9418] Initializing Terraform workspace.
+2026-03-19 09:01:13,468 - InfraService - ERROR - [a3f1dd72-e787-4305-824c-3bd1b84b9418] Terraform command failed. STDOUT: Initializing the backend...
+
+The currently selected workspace (dbed27c2-9af4-41dd-8b42-5594690359da) does not exist.
+  This is expected behavior when the selected workspace did not have an
+  existing non-empty state. Please enter a number to select a workspace:
+  
+  1. default
+  2. 24ff21b6-96f8-4256-a852-958c3f522522
+  3. 85ecdb03-0547-43f9-bc45-09fc3d724f48
+  4. 8ccbb27e-bc8d-44f5-b92f-b39d5410addb
+  5. 8cdd757d-f0b6-455c-829a-da02796867e2
+  6. adf4dc1e-c6d5-4020-b384-eeb0b64ebe6c
+  7. ca37acbd-b931-48d4-a3c5-5f239f5f0aff
+  8. null
+
+  Enter a value: Initializing modules...
+ | STDERR: 
+Error: Failed to select workspace: EOF
+
+
+2026-03-19 09:01:13,468 - InfraService - INFO - [a3f1dd72-e787-4305-824c-3bd1b84b9418] Cleaning up pending database records due to failure.
+2026-03-19 09:01:13,569 - RabbitWorker - ERROR - [a3f1dd72-e787-4305-824c-3bd1b84b9418] Provisioning failed. Acknowledging message to prevent loop. Details: {'detail': 'Terraform command failed: Error: \nError: Failed to select workspace: EOF\n\n'}
+2026-03-19 09:29:05,784 - RabbitWorker - INFO - Infrastructure Worker active. Listening to queue: 'create_vm'
+2026-03-19 09:29:45,833 - RabbitWorker - INFO - [1a01cc7a-0688-4d55-a53c-9d88610cff0e] Received provisioning request for VM: t6
+2026-03-19 09:29:45,834 - InfraService - INFO - [1a01cc7a-0688-4d55-a53c-9d88610cff0e] Initializing Terraform workspace.
+2026-03-19 09:29:46,369 - InfraService - INFO - [1a01cc7a-0688-4d55-a53c-9d88610cff0e] Inserting initial database records.
+2026-03-19 09:29:46,432 - InfraService - INFO - [1a01cc7a-0688-4d55-a53c-9d88610cff0e] Executing Terraform apply.
+2026-03-19 09:31:21,312 - InfraService - INFO - [1a01cc7a-0688-4d55-a53c-9d88610cff0e] Provisioning complete. Updating database with MOID: vm-4111
+2026-03-19 09:31:21,401 - RabbitWorker - INFO - [1a01cc7a-0688-4d55-a53c-9d88610cff0e] Provisioning successful. Message acknowledged.
+2026-03-19 12:37:05,699 - RabbitWorker - INFO - [1924094d-22b8-4843-aa11-ccb91b2302c4] Received provisioning request for VM: t66
+2026-03-19 12:37:05,701 - InfraService - INFO - [1924094d-22b8-4843-aa11-ccb91b2302c4] Initializing Terraform workspace.
+2026-03-19 12:37:06,275 - InfraService - INFO - [1924094d-22b8-4843-aa11-ccb91b2302c4] Inserting initial database records.
+2026-03-19 12:37:06,329 - InfraService - INFO - [1924094d-22b8-4843-aa11-ccb91b2302c4] Executing Terraform apply.
+2026-03-19 12:38:45,301 - InfraService - INFO - [1924094d-22b8-4843-aa11-ccb91b2302c4] Provisioning complete. Updating database with MOID: vm-4112
+2026-03-19 12:38:45,386 - RabbitWorker - INFO - [1924094d-22b8-4843-aa11-ccb91b2302c4] Provisioning successful. Message acknowledged.
+2026-03-19 12:47:22,129 - RabbitWorker - INFO - [9739562d-7ead-4305-98af-c2ff96bd8899] Received provisioning request for VM: t60
+2026-03-19 12:47:22,130 - InfraService - INFO - [9739562d-7ead-4305-98af-c2ff96bd8899] Initializing Terraform workspace.
+2026-03-19 12:47:22,667 - InfraService - INFO - [9739562d-7ead-4305-98af-c2ff96bd8899] Inserting initial database records.
+2026-03-19 12:47:22,717 - InfraService - INFO - [9739562d-7ead-4305-98af-c2ff96bd8899] Executing Terraform apply.
+2026-03-19 12:48:55,516 - InfraService - INFO - [9739562d-7ead-4305-98af-c2ff96bd8899] Provisioning complete. Updating database with MOID: vm-4113
+2026-03-19 12:48:55,603 - RabbitWorker - INFO - [9739562d-7ead-4305-98af-c2ff96bd8899] Provisioning successful. Message acknowledged.
+2026-03-19 12:48:55,605 - RabbitWorker - INFO - [3179e575-2fbf-4b1b-8be0-d642d1c48131] Received provisioning request for VM: t61
+2026-03-19 12:48:55,605 - InfraService - INFO - [3179e575-2fbf-4b1b-8be0-d642d1c48131] Initializing Terraform workspace.
+2026-03-19 12:48:55,982 - InfraService - INFO - [3179e575-2fbf-4b1b-8be0-d642d1c48131] Inserting initial database records.
+2026-03-19 12:48:56,022 - InfraService - INFO - [3179e575-2fbf-4b1b-8be0-d642d1c48131] Executing Terraform apply.
+2026-03-19 12:50:25,470 - InfraService - INFO - [3179e575-2fbf-4b1b-8be0-d642d1c48131] Provisioning complete. Updating database with MOID: vm-4114
+2026-03-19 12:50:25,555 - RabbitWorker - INFO - [3179e575-2fbf-4b1b-8be0-d642d1c48131] Provisioning successful. Message acknowledged.
+2026-03-19 12:50:25,557 - RabbitWorker - INFO - [5cbb5549-028c-46ea-98a9-1e10b2ada1ae] Received provisioning request for VM: t2
+2026-03-19 12:50:25,557 - InfraService - INFO - [5cbb5549-028c-46ea-98a9-1e10b2ada1ae] Initializing Terraform workspace.
+2026-03-19 12:50:25,994 - InfraService - INFO - [5cbb5549-028c-46ea-98a9-1e10b2ada1ae] Inserting initial database records.
+2026-03-19 12:50:26,041 - InfraService - INFO - [5cbb5549-028c-46ea-98a9-1e10b2ada1ae] Executing Terraform apply.
+2026-03-19 12:51:55,500 - InfraService - INFO - [5cbb5549-028c-46ea-98a9-1e10b2ada1ae] Provisioning complete. Updating database with MOID: vm-4115
+2026-03-19 12:51:55,575 - RabbitWorker - INFO - [5cbb5549-028c-46ea-98a9-1e10b2ada1ae] Provisioning successful. Message acknowledged.

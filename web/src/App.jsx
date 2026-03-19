@@ -191,11 +191,10 @@ export default function App() {
     setPendingMoid(null);
 
     const txUuid = generateUUID();
-    const expectedPendingMoid = `pending-${txUuid}`;
 
     try {
-      // Step 1: Start Create VM via Terraform (Do NOT await yet)
-      const createPromise = fetch(`${API_BASE_URL}/vm`, {
+      // Step 1: Start Create VM via RabbitMQ (Returns immediately)
+      const createRes = await fetch(`${API_BASE_URL}/vm`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -214,46 +213,56 @@ export default function App() {
         }),
       });
 
-      // Step 2: Poll Database for Pending Record Arrival
-      let isInserted = false;
-      for (let i = 0; i < 20; i++) {
+      if (!createRes.ok) {
+        const errData = await createRes.json();
+        throw new Error(errData.detail || 'Failed to queue VM creation');
+      }
+
+      // Step 2: Poll Database for Provisioning Progress
+      // We poll until we get a "real" MOID (not starting with 'pending-')
+      let realMoidFound = false;
+      // Terraform can take up to 2-3 minutes, so 1.5s * 120 = 180s
+      for (let i = 0; i < 120; i++) {
         await new Promise(r => setTimeout(r, 1500));
         try {
           const checkRes = await fetch(`${API_BASE_URL}/check_provisioning/${txUuid}`);
           if (checkRes.ok) {
             const checkData = await checkRes.json();
             if (checkData.exists) {
-              isInserted = true;
-              break;
+              const currentMoid = checkData.vcenter_uuid;
+              setPendingMoid(currentMoid);
+              
+              // If it's a real MOID, we are done
+              if (currentMoid && !currentMoid.startsWith('pending-')) {
+                realMoidFound = true;
+                break;
+              }
+              
+              // If it's the first time we see the pending record, refresh sidebar once
+              if (i % 5 === 0) await fetchVMCache(); 
             }
           }
         } catch { /* ignore network error while polling */ }
       }
 
-      if (isInserted) {
-        setPendingMoid(expectedPendingMoid);
-        await fetchVMCache(); // Force sidebar refresh so pending VM is visible
+      if (realMoidFound) {
+        addToast(`Provisioning complete for VM: ${vmName}.`, 'success');
+        await fetchVMCache();
+        // We keep the modal open so the user can click "View VM Details"
+      } else {
+        // If we timed out but it's still pending, at least the user has the 'pending' link
+        if (!pendingMoid) {
+            throw new Error("Provisioning timed out or record not found.");
+        }
       }
 
-      // Step 3: Now await the actual terraform completion
-      const createRes = await createPromise;
-      const createData = await createRes.json();
-      if (createData?.detail) throw new Error(createData.detail);
-
-      setShowCreating(false);
-      addToast(`Provisioning complete for VM: ${vmName}.`, 'success');
-      await fetchVMCache();
-
-      if (createData?.real_moid) {
-        navigate(`/vm/${encodeURIComponent(createData.real_moid)}`);
-      }
     } catch (error) {
       setShowCreating(false);
       addToast(`Execution failure for ${vmName}. Detail: ${error.message || error}`, 'error');
+      setIsCreating(false);
+      setPendingMoid(null);
     } finally {
       setIsCreating(false);
-      // Clean up local pending mapping so the active real_moid takes over visually.
-      setPendingMoid(null); 
     }
   };
 

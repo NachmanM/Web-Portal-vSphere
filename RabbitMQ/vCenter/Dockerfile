@@ -10,10 +10,12 @@ RUN apt-get update && apt-get install -y gnupg curl ca-certificates && \
     apt-get update && apt-get install -y terraform && \
     rm -rf /var/lib/apt/lists/*
 
-COPY requirments.txt:.
+COPY requirements.txt .
 
 RUN apt update && pip install -r requirements.txt
 
 COPY . .
 
 EXPOSE 5672
+
+CMD ["python3", "consumer.py"]

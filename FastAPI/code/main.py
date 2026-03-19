@@ -8,6 +8,7 @@ import ast
 import json
 import asyncio
 import asyncpg
+import aio_pika
 from datetime import datetime
 from sync_pg.sync_pg_lifecycle import lifespan
 
@@ -60,110 +61,20 @@ async def run_db_execute(query: str, *args):
         await conn.close()
 
 @app.post('/vm')
-def create_vm(payload: VMCreation):
-    try:
-        import uuid
-        random_uuid = payload.transaction_uuid
-        
-        cmd = ["terraform", "-chdir=Terraform", "init"]
-        init_result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        
-        cmd = ["terraform", "-chdir=Terraform/", "workspace", "new", f"{random_uuid}"]
-        workspace_result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-    
-        async def insert_db_record():
-            conn = await asyncpg.connect(os.getenv("PG_CONN_STR"))
-            try:
-                query = """
-                INSERT INTO terraform_remote_state.state_metadata (
-                    state_key, owner, folder, portgroup, template_used, 
-                    cpu_cores, ram_mb, disk_gb, shutdown_date, deletion_date, vcenter_uuid, status
-                ) VALUES (
-                    $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, 'provisioning'
-                )
-                """
-            
-                await conn.execute(
-                    query, 
-                    random_uuid,                    # Maps to $1 (State key is the generated UUID)
-                    payload.owner,                  # Maps to $2 (Ensure 'owner' exists in your VMCreation model)
-                    payload.folder,                 # Maps to $3
-                    payload.portgroup,              # Maps to $4
-                    payload.template,               # Maps to $5 (Matches your terraform var)
-                    payload.cpu_number,             # Maps to $6 (Matches your terraform var)
-                    payload.ram_size,               # Maps to $7 (Matches your terraform var)
-                    int(payload.disk_size_gb[0]),   # Maps to $8 (Matches your terraform var)
-                    payload.shutdown_date,          # Maps to $9 (Ensure this exists in your model)
-                    payload.deletion_date,          # Maps to $10 (Ensure this exists in your model)
-                    f"pending-{random_uuid}"        # Maps to $11
-                )
+async def create_vm(payload: VMCreation):
+    async with await aio_pika.connect_robust("amqp://guest:guest@rabbitmq/") as conn:
+        async with conn.channel() as channel:
+            queue = await channel.declare_queue("create_vm")
+            msg_body = payload.model_dump_json().encode('utf-8')
+            await channel.default_exchange.publish(
+                aio_pika.Message(
+                    body=msg_body,
+                    content_type='application/json'
+                ),
+                routing_key=queue.name
                 
-                await conn.execute(
-                    "INSERT INTO terraform_remote_state.vcenter_inventory_cache "
-                    "(vm_moid, vm_name, folder_name, power_state) "
-                    "VALUES ($1, $2, $3, 'provisioning');",
-                    f"pending-{random_uuid}", payload.vm_name, payload.folder
-                )
-            finally:
-                await conn.close()
-
-        asyncio.run(insert_db_record())
-        
-
-        disk_size_gb = json.dumps(payload.disk_size_gb)
-        cmd2 = ["terraform", "-chdir=Terraform", "apply", "-no-color",
-                 f"-var=vm_name={payload.vm_name}",
-                 f"-var=folder={payload.folder}",
-                 f"-var=template={payload.template}",
-                 f"-var=portgroup={payload.portgroup}",
-                 f"-var=is_windows_image={payload.is_windows_image}",
-                 f"-var=ram_size={payload.ram_size}",
-                 f"-var=cpu_number={payload.cpu_number}",
-                 f"-var=disk_size_gb={disk_size_gb}",
-                  "-auto-approve"]
-        
-        apply_result = subprocess.run(cmd2, capture_output=True, text=True, check=True)
-
-        cmd_output = ["terraform", "-chdir=Terraform", "output", "-json", "moid"]
-        output_result = subprocess.run(cmd_output, capture_output=True, text=True, check=True)
-        uuid_list = json.loads(output_result.stdout)
-        real_uuid = uuid_list[0]
-        if real_uuid:
-            # 2. Save the MOID to the vcenter column
-            asyncio.run(run_db_execute("UPDATE terraform_remote_state.state_metadata SET vcenter_uuid = $1 WHERE state_key = $2",
-                    real_uuid, random_uuid))
-            
-            asyncio.run(run_db_execute("UPDATE terraform_remote_state.state_metadata SET status = 'active' WHERE vcenter_uuid = $1",
-                    real_uuid))
-                    
-            asyncio.run(run_db_execute("UPDATE terraform_remote_state.vcenter_inventory_cache SET vm_moid = $1, power_state = 'poweredOn' WHERE vm_moid = $2",
-                    real_uuid, f"pending-{random_uuid}"))
-
-        return {"status": "success", "created": f"{apply_result.stdout}", "real_moid": real_uuid}
-    except subprocess.CalledProcessError as e:
-        # e.stderr contains the exact red text error generated by Terraform
-        # e.stdout contains the standard output up until the point of failure
-        error_output = e.stderr if e.stderr else e.stdout
-        
-        # Cleanup pending VM on terraform failure
-        asyncio.run(run_db_execute("DELETE FROM terraform_remote_state.vcenter_inventory_cache WHERE vm_moid = $1", f"pending-{random_uuid}"))
-        asyncio.run(run_db_execute("DELETE FROM terraform_remote_state.state_metadata WHERE state_key = $1", random_uuid))
-        
-        # FastAPI Example
-        from fastapi import JSONResponse
-
-        # Inside your route logic, when Terraform fails:
-        return {"detail": f"Terraform command failed output: Error: {error_output}"}
-
-
-    
-    except Exception as e:
-        # This acts as a fallback for database timeouts or Python syntax errors
-        return {
-            "status": "failed", 
-            "message": "Internal System Error", 
-            "command_result": str(e)
-        }
+            )    
+    return {"status": "Message accepted", "queue": queue.name}
     
 
 
@@ -295,7 +206,7 @@ def list_portgroups():
         parsed_portgroups = ast.literal_eval(raw_output)
         return {"status": "success", "portgroups": parsed_portgroups}
     except Exception as e:
-        return {"status": "error", "Error message": e}
+        return {"status": "error", "Error message": repr(e)}
 
 
 @app.get('/vm-ip')
@@ -325,7 +236,7 @@ def check_provisioning(tx_uuid: str):
         conn = await asyncpg.connect(os.getenv("PG_CONN_STR"))
         try:
             row = await conn.fetchrow(
-                "SELECT status FROM terraform_remote_state.state_metadata WHERE state_key = $1",
+                "SELECT status, vcenter_uuid FROM terraform_remote_state.state_metadata WHERE state_key = $1",
                 tx_uuid
             )
             return dict(row) if row else None
@@ -335,7 +246,11 @@ def check_provisioning(tx_uuid: str):
     try:
         result = asyncio.run(_query())
         if result:
-            return {"exists": True, "status": result["status"]}
+            return {
+                "exists": True, 
+                "status": result["status"],
+                "vcenter_uuid": result["vcenter_uuid"]
+            }
         return {"exists": False}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

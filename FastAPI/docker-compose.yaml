@@ -10,15 +10,14 @@ services:
       - .env.db
     networks:
       - shared-net
+      - rabbitmq-net
         
   fast-api:
-    image: nachman/fast-api:v0.0
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-      - "5672:5672"
     networks:
       - shared-net
     env_file:
@@ -33,6 +32,11 @@ networks:
   shared-net:
     external: true
     name: shared-bridge
+
+  rabbitmq-net:
+    external: true
+    name: shared-rabbitmq-workers
+
 
 volumes:
   postgres_data: {}

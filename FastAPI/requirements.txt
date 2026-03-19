@@ -4,3 +4,4 @@ pyvmomi==9.0.0.0
 python-dotenv==1.2.1
 asyncpg==0.31.0
 apscheduler
+aio-pika==9.6.1

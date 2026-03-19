@@ -102,5 +102,7 @@ def get_vm_info():
         if si:
             Disconnect(si)
 
+    
+
 if __name__ == '__main__':
     get_vm_info()

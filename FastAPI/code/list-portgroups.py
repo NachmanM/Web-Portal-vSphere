@@ -11,9 +11,16 @@ async def list_portgroups():
         )
         clean_list = []
         for r in row:
-            clean_list.append(r['portgroups'])
+            for p in r:
+                # Check if VM does not have any portgroups
+                if p == []:
+                    break
+                clean_list.append(p[0])
+                
+
         unique_list = set(clean_list)
         resp_list = []
+  
         for u in unique_list:
             resp_list.append({
                 "name": u,
