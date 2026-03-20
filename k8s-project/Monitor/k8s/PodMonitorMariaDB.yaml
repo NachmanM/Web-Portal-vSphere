@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: db-app-monitor
+  namespace: default
+  labels:
+    release: prom-stack # Strictly required for discovery by the default configuration
+spec:
+  selector:
+    matchLabels:
+      app: my-db # Matches the label on our target pod
+  podMetricsEndpoints:
+  - port: metrics # Matches the named port on our target pod container

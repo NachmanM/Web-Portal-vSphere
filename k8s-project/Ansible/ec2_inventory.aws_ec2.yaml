@@ -1,0 +1,16 @@
+plugin: amazon.aws.aws_ec2
+
+regions:
+- us-east-1
+
+hostnames:
+- ip-address
+
+filters:
+  instance-state-name: running
+
+  tag:env:
+  - k8s-terraform-sandbox-nachman
+
+keyed_groups:
+ - key: tags.k8s

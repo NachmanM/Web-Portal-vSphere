@@ -1,0 +1,4 @@
+private_key_src: '~/.ssh/k8s-project' 
+private_key_dest: '/root/.ssh/id_rsa'
+target_group: root
+target_user: root

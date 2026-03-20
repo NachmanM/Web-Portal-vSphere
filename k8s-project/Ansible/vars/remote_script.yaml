@@ -1,0 +1,2 @@
+remote_script_path: /usr/local/bin/my_setup_script.sh
+script_src: ./scripts/init-cluster.sh

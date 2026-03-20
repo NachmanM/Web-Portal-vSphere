@@ -1,0 +1,32 @@
+- name: test
+  hosts: aws_ec2
+  become: true
+  become_user: root
+  vars_files:
+  - vars/bashrc_update.yaml
+  - vars/copy_ssh.yaml
+  - vars/k8s.yaml
+  - remote_script.yaml
+
+  tasks:
+  - name: Copy private SSH key to remote host
+    ansible.builtin.copy:
+      src: "{{ private_key_src }}"
+      dest: "{{ private_key_dest }}"
+      owner: "{{ target_user }}"
+      group: "{{ target_group }}"
+      mode: '0600'
+    when: kubernetes_role == "control_plane"
+    
+  - name: Copy script to remote node
+    ansible.builtin.copy:
+      src: "{{ script_src }}"
+      dest: "{{ remote_script_path }}"
+      mode: '0755' # Grants execute permissions
+    when: kubernetes_role == "control_plane"
+
+  - name: Execute the copied script
+    ansible.builtin.command:
+      cmd: "{{ remote_script_path }}"
+    register: command_outpu
+    when: kubernetes_role == "control_plane"
